@@ -3,6 +3,12 @@ class HeatmapController < ApplicationController
     render json: employees_heat_map
   end
 
+  def create
+    employee = Employee.create!(employee_params)
+
+    render json: { employee: employee, status: 201 }
+  end
+
   private
 
   def employees_heat_map
@@ -33,5 +39,9 @@ class HeatmapController < ApplicationController
 
   def employees
     @employees ||= Employee.all_employees_driver_names_with_department_and_scores
+  end
+
+  def employee_params
+    params.permit(:name, :email, :department, :location, :gender, :age)
   end
 end
